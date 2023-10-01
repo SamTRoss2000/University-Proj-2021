@@ -1,0 +1,14 @@
+Abbreviation,Meaning 
+min_prec,The median value for the minimum monthly precipitation for each ecoregion
+max_prec,The median value for the maximum monthly precipitation for each ecoregion
+min3m_prec,The median value for the minimum precipitation for a continuous period of three months for each ecoregion
+max3m_prec, The median value for the maximum precipitation for a continuous period of three months for each ecoregion
+mad_prec, The median value of the mean absolute deviation of precipitation over the year (so based on monthly data)
+tot_prec,The median value for the total amount of precipitation over an entire year
+min_temp, The median value for the minimum monthly temperature for each ecoregion
+max_temp,The median value for the maximum monthly temperature for each ecoregion
+min3m_temp,The median value for the minimum temperature for a continuous period of three months for each ecoregion
+max3m_temp,The median value for the minimum temperature for a continuous period of three months for each ecoregion
+med_temp,The median value for the median temperature over the year for each ecoregion
+mad_temp, The median value of the mean absolute deviation of temperature over the year (so based on monthly data)
+mad_elev,The mean absolute deviation of elevation for each ecoregion

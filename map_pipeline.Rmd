@@ -1,0 +1,354 @@
+---
+title: "Creating a pipeline for the data formatting and map creation from a provided neotropical dataset"
+author: "Y3867322"
+date: "07/02/2021"
+output: 
+  html_document:
+    css: "style/style.css"
+runtime: shiny
+bibliography: "references/references.bib"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.retina = 3)
+knitr::write_bib(c("janitor", "tidyverse", "reshape2", "plyr", "shiny", "leaflet", "kableExtra", "DT")) 
+
+```
+
+## **Introduction**
+The aim of this report is to create a reproducible pipeline that enables the visualization of spatial data regarding neotropical diversity. The importance of this has been highlighted and is well known [@kraak]. The pipeline I will create will be able to format and collate data from three different data sources that could be updated in the future with more data points to update the map that will be produced. The map that will be outputted will be an interactive map via the leaflet package [@leaflet]. The interactive element will consist of options for a user to select allowing them to refine the type of data they wish to be displayed on the map. 
+
+## **Requirements**
+There are packages that require installation prior to running the markdown otherwise it will not work as intended. The code required for installing these packages can be found in the README.txt located in the Y3867322 folder. It is also recommended that any already installed packages are checked for updates before running the markdown. If the markdown is knitted before these packages are installed or updated the markdown cache may need clearing post update for the markdown to successfully knit as intended.
+
+
+```{r packages, include=FALSE}
+
+# Used for examining and cleaning data 
+library(janitor)
+
+# tidyverse is a collection of packages for data tidying and includes the pipe
+library(tidyverse)
+
+# Allows melting and recasting of data which allows conversion from wide to long formats and vice versa
+library(reshape2)
+
+# Used for the combining of dataframes
+library(plyr)
+
+# Used for building interactive web apps in R
+library(shiny)
+
+# Allows creating and customizing interactive maps 
+library(leaflet)
+
+# Used for building complex HTML tables
+library(kableExtra)
+
+# DT used as most of the dataframes are too large to be suitable for kableExtra
+library(DT)
+
+```
+
+## **The data sets**
+The data sets provided consist of two .csv files and a .txt file. The two .csv files are for climate data and number of species data. While the ecoregion is the .txt file. A notable difference between the data sets is that the climate data is in a “long” format where each row is a singular data point and all of the different data for the same location(code) will be on different rows. Whereas the other two datasets are in a wide format where all of the data for a location(code) are on a singular row.  For combining the data sets the climate data will require pivoting to convert it into a wide format. The only similarity between the datasets is that they all contain a “code” column. This is the key to combining the datasets as each location will have the same code.
+
+### **Formatting the [ecoregion.txt](https://vle.york.ac.uk/bbcswebdav/pid-3572083-dt-content-rid-9362964_2/xid-9362964_2) dataset**
+This dataset was provided in the form of a .txt file. To import the dataframe into a usable form in RStudio I used the 'read_table2' function [@tidyverse]. This function allows accurate column separation by interpreting spaces in the .txt file. Therefore creating an accurate table with the column names preserved. Multiple of these column names however required renaming to a more appropriate snake case alternative.
+
+This file contains some basic geographical and climate metadata for each region that was monitored. More importantly this dataset includes longitude and latitude data for each ecoregion. This data is necessary for plotting the location of each datapoint on the map that will be created.
+
+```{r reading in ecoregion data, include=FALSE}
+setwd("data/raw_data")
+# Ecoregion data is read in from 'ecoregion.txt'
+ecoregion_data_raw <- "ecoregion.txt"
+
+# 'read_table2' used to convert the .txt file into a data frame with accurate column separation
+ecoregion_data <- read_table2(ecoregion_data_raw,
+                              col_names = T)
+
+# Some of the column headers are renamed to snake case alternatives
+ecoregion_data
+names(ecoregion_data)[6] <- "rain_south"
+names(ecoregion_data)[7] <- "rain_west"
+names(ecoregion_data)[8] <- "temp_south"
+names(ecoregion_data)[9] <- "temp_west"
+names(ecoregion_data)[10] <- "patch_num"
+names(ecoregion_data)[11] <- "mad_elev"
+
+```
+
+### **The ecoregion.txt dataframe post formatting**
+```{r show ecoregion data, echo=FALSE, fig.cap="Table 1. The ecoregion data post formatting"}
+DT::datatable(ecoregion_data)
+```
+
+<br><br><br><br>
+
+## **Formatting the climate.csv dataset**
+This dataset was provided in the form of a .csv file and contains data regarding the climate for each of the ecoregions in a long data form. The data provided was made up of three columns; code, type and measure. The type column contained the type of measurement that was made. These were measurements surrounding either precipitation or temperature data of each ecoregion. The measure column contained the corresponding value for each type. This column would require pivoting to convert this dataset into a wide format, which would make it more suitable for being combined with the other datasets.
+
+```{r reading in climate data, include=FALSE}
+setwd("data/raw_data")
+# Climate data is read in from 'climate.csv'      
+climate_data <- read.csv("climate.csv", header = T) %>%
+  janitor::clean_names()
+
+# The data in the type column is converted into snake case
+climate_data <- climate_data %>%
+  mutate(type = str_replace_all(type, "[.]", "_") %>%
+           as.factor())
+
+# The data frame is converted into a wide format, creating one row for each 'code'
+climate_data <- spread(climate_data, type, measure) 
+
+```
+### **The climate.csv dataframe post formattting**
+```{r show climate data, echo=FALSE, fig.cap="Table 2. The climate data post formatting"}
+DT::datatable(climate_data)
+```
+
+<br><br><br><br>
+
+## **Formatting the numberofspecies.csv dataset**
+This data was also provided in the form of a .csv file and includes the name and predominant biome of each ecoregion. The data frame also includes the abundance of four groups of tetrapods; birds, mammals, reptiles and amphibians. As well as the total recorded number of these organisms for each ecoregion. Formatting for this dataset only consisted of renaming headers to more suitable names and unabbreviating the biome names.
+
+
+```{r reading in species data, include=FALSE}
+setwd("data/raw_data")
+species_data <- read.csv("numberofspecies.csv", header = T) %>%
+  janitor::clean_names()
+
+# Renames the headers to more suitable names
+names(species_data)[4] <- "bird_num"
+names(species_data)[5] <- "mammal_num"
+names(species_data)[6] <- "reptile_num"
+names(species_data)[7] <- "amphibian_num"
+names(species_data)[8] <- "total_num" 
+
+# Unabbreviate the biome names for display on the map
+species_data <- species_data %>%
+  mutate(biome = str_replace_all(biome, "TrM", "Tropical Moist Forest") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "TrD", "Tropical Deciduous Forest") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "TrC", "Tropical Coniferous Forest") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "TeM", "Temperate Moist Forest") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "TrG", "Tropical Grasslands") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace(biome, "^\\s*[G]", "Grasslands") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "FG", "Flooded Grasslands") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "MG", "Montane Grasslands") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "MeF", "Mediterranean Forest") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "^\\s*[D]", "Deserts") %>% 
+           as.factor()) %>%
+  mutate(biome = str_replace_all(biome, "Ma", "Mangroves") %>% 
+           as.factor())
+
+```
+
+### **The numberofspecies.csv dataframe post formattting**
+```{r show species data, echo=FALSE, fig.cap="Table 3. The species data post formatting"}
+DT::datatable(species_data)
+```
+
+<br><br><br><br>
+
+## **Merging these dataframes**
+Now that the data frames have been formatted and cleaned they are able to be combined. This is done using the merge function [@plyr] and are combined via the shared “code” column
+
+```{r merge the dataframes, echo=FALSE}
+intermediate_wide <- merge(climate_data, ecoregion_data, by = "code")
+overall_wide <- merge(intermediate_wide, species_data, by = "code")
+```
+
+### **The merged dataframes**
+```{r show merged data, echo=FALSE, fig.cap="Table 4. The dataframe produced by merging the previous three dataframes"}
+DT::datatable(overall_wide)
+```
+
+<br><br><br><br>
+
+## **Creating a map displaying all the locations data was recorded**
+This map created using the leaflet package [@leaflet] allows the data to be displayed spatially on a world map via the longitude and latitude data it contains. This is useful as it allows a visualization of the data that is not possible from just inspecting the dataset.
+
+However due to the plethora of data types it is not possible to display all of them at once. So on this map just the ecoregion name, biome and code are displayed. This allows data to be explored by investigating the data frames via the code they all share.
+
+This method is clearly limiting and could be improved upon and made more streamlined. The rest of this report will be based upon improving the usability of this leaflet style map. This will be carried out by creating a pipeline for further editing the data to be more suitable for this. To allow the visualization of more data a shiny app will be produced based on the leaflet map and input options. These input options will allow the user to pick which data type they wish to be shown. 
+
+### **A map that displays all the datapoints**
+```{r first map, echo=FALSE}
+leaf_map <- leaflet(overall_wide) %>%
+    addProviderTiles("Stamen.Terrain") %>%
+      addMarkers(lng = overall_wide$long, lat = overall_wide$lat,
+                 popup = paste0(overall_wide$ecoregion_name, "<br/>Biome:",
+                                overall_wide$biome,"<br/>Code:", overall_wide$code),
+                 clusterOptions = markerClusterOptions())
+leaf_map
+```
+Map 1. A map created using leaflet which displays the location of all the data points. Clicking on a datapoint produces a popup stating the ecoregion name, biome and code
+
+<br><br><br><br>
+
+## **Creating a dataframe suitable for creating a map using shiny**
+To achieve this the important metadata for each location; ecoregion name, biome, longitude and latitude must be isolated and added to each individual of the formatted data frames. This is done so that the data types can be filtered without losing any of the key data required for the map. The first step is isolating the metadata using the original data frames. Coordinates and biome metadata are extracted from the ecoregion and species datasets respectively. Once this metadata has been isolated it must be added to the data frames which they were not originally a part of. 
+
+```{r isolating metadata, include=FALSE}
+coordinates <- subset(ecoregion_data, select = -c(areakm2, elev, rain_south, rain_west, temp_south, temp_west, patch_num, mad_elev))
+coordinates$code <- as.factor(coordinates$code) 
+
+biome_metadata <- subset(species_data, select = -c(bird_num, mammal_num, reptile_num, amphibian_num, total_num))
+```
+
+```{r merging the metadata, include=FALSE}
+species_data <- merge(species_data, coordinates, by = "code")
+ecoregion_data <- merge(ecoregion_data, biome_metadata, by = "code")
+climate_data <- merge(climate_data, biome_metadata, by = "code")
+climate_data <- merge(climate_data, coordinates, by = "code")
+
+```
+## **Melting these dataframes**
+The next change is using the 'melt' function to convert the data frames to a longer format by adding two new columns to each dataset. One named sec_type which will contain the previous headers apart from the ecoregion name, code, biome, latitude and longitude columns which are maintained. The other new column is named 'value' and contains the associated value with the sec_type on its row.
+
+
+```{r melting dataframes, include=FALSE}
+species_melt <- melt(species_data, id = c("ecoregion_name", "code", "biome", "long", "lat"),
+                     variable.name = "sec_type", value.name = "value")
+species_melt$value <- as.factor(species_melt$value)
+
+climate_melt <- melt(climate_data, id = c("ecoregion_name", "code", "biome", "long", "lat"),
+                     variable.name = "sec_type", value.name = "value")
+climate_melt$value <- as.factor(climate_melt$value)
+
+ecoregion_melt <- melt(ecoregion_data, id = c("ecoregion_name", "code", "biome", "long", "lat"),
+                       variable.name = "sec_type", value.name = "value")
+ecoregion_melt$value <- as.factor(ecoregion_melt$value)
+
+```
+
+Once this is done another new column is added to each dataframe, "pri_type". This column contains the name of the group of data the data frame contains. E.g. The species dataframe will contain "Species Data'' in the new column. This is necessary for the construction of the options in the shiny app being produced. Now these new columns have been added the data frames can be combined again using the rbind.fill function [@plyr]
+
+```{r adding pri_type, include=FALSE}
+species_melt["pri_type"] <- rep("Species Data", nrow(species_melt))
+climate_melt["pri_type"] <- rep("Climate Data", nrow(climate_melt))
+ecoregion_melt["pri_type"] <- rep("Ecoregion Data", nrow(ecoregion_melt))
+
+```
+
+```{r combining melts, include=FALSE}
+intermediate_melt <- rbind.fill(species_melt, climate_melt)
+overall_melt <- rbind.fill(intermediate_melt, ecoregion_melt)
+
+overall_melt[] <- lapply(overall_melt, as.character)
+overall_melt$value <- as.numeric(overall_melt$value)
+
+overall_melt$long <- as.numeric(overall_melt$long)
+overall_melt$lat <- as.numeric(overall_melt$lat)
+```
+
+### **The combined melt dataframes**
+```{r show overall_melt data, echo=FALSE, fig.cap="Table 5. A dataframe produced by combining the three melted dataframes"}
+DT::datatable(overall_melt)
+```
+
+<br><br><br><br>
+
+## **Creating the shiny leaflet map**
+The new data frame that has been produced via the pipeline can be used for the construction of the shiny map however the new data frame has a limitation. Due to it being in a long form essentially there are 25 data points at each coordinate point on the map rather than just the one that is desired. To resolve this issue the data frame used for the map earlier on is used to add the markers to the map as this is in a wider format. Therefore each location represents only one row rather than 25. A combination of these two data frames is used to create the desired interactive map. Another feature of this map is that it also has blue circles around each data point which are visible only after a certain zoom level. These represent the total area covered by each ecoregion with the data point being the geographical center. The ecoregions do not form a perfect circle like the map suggests so the circle is just to visualise the size of the area the ecoregion covers and is not an indicator of where the ecoregion covers spatially. To prevent an error in the coding for the conversion of the km2 area data to meter radius I have created and used a function “area_rad”. The area was included due to the range seen in the data. For example the lowest and highest area in km2 respectively was `r range(overall_wide$areakm2) ` .Another issue with the data was that the explanations for the climate data abreviations could not be easily explained in such a small box. To overcome this a key was added below the map.
+```{r shiny map, echo=FALSE}
+source("functions/area_rad.R")
+
+ui <- fluidPage(
+  ## App title
+  titlePanel("Map of neotropical data"),
+  
+  ##Sidebar layout with input and output definitions
+  sidebarLayout(
+    
+    ##Sidebar panel for inputs
+    sidebarPanel(
+      
+      ##First input: Type of data
+      selectInput(inputId = "data_type1",
+                  label = "Choose the area of data you're interested in:", 
+                  choices = list("Species Data" = "Species Data", "Climate Data" = "Climate Data", "Ecoregion Data" = "Ecoregion Data")),
+      
+      ##Second input (choices depend on the choice for the first imput)
+      uiOutput("secondSelection"), 
+      
+    ),
+    
+    ##Main panel for displaying outputs
+    mainPanel(
+      
+      ##Output: interactive world map
+      leafletOutput("leaf_map2")
+      
+    )
+  )
+)
+
+# Define the server 
+server <- function(input, output, session) {
+  
+  output$leaf_map2 <- renderLeaflet({
+    leaflet(overall_melt) %>%
+    addProviderTiles("Stamen.Terrain") %>%
+      addMarkers(data = overall_wide, lng = overall_wide$long, lat = overall_wide$lat,
+                 popup = paste0(overall_wide$ecoregion_name, "<br/>Biome:",
+                                overall_wide$biome,"<br/>Code:", overall_wide$code,
+                                "<br/>", input$sec_type, ": ", (overall_melt$value[which(overall_melt$sec_type == input$sec_type)])),
+                 clusterOptions = markerClusterOptions())%>%
+      addCircles(lng = overall_melt$long, lat = overall_melt$lat, weight = 1,
+                 fillColor = "transparent",
+                 radius = area_rad(overall_melt$value[which(overall_melt$sec_type == "areakm2")]),
+                 group = "radius") %>%
+      groupOptions("radius", zoomLevels = 5:20)
+  })
+  
+  ##Change the choices for the second selection on the basis of the input to the first selection
+  output$secondSelection <- renderUI({
+    choice_second <- as.list(unique(overall_melt$sec_type[which(overall_melt$pri_type == input$data_type1)])) 
+    selectInput(inputId = "sec_type", choices = choice_second,
+                label = "Choose the more specific data type to be displayed 
+                (See below for key): ")
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+```
+Map 2. A interactive shiny leaflet map. <br/> Each point on the map represents the geographical center of a ecoregion with data regarding that ecoregion displayed via the options and a popup. Blue circles display the size of the area the ecoregion covers.
+
+```{r key, echo=FALSE}
+setwd("data/raw_data")
+key <- read.csv("key.csv", header = TRUE)
+key %>%
+  knitr::kable(caption = "Key",
+               col.names = c("Abreviation",
+                             "Meaning")) %>%
+  kable_styling(font_size = 15)
+```
+
+```{r export processed data, include=FALSE}
+# Output the processed data to the processsed_data file
+setwd("data/processed_data")
+write.csv(overall_wide, "overall_data.csv")
+write.csv(overall_melt, "overall_melt.csv")
+```
+
+
+Word count- 1593
+
+
+

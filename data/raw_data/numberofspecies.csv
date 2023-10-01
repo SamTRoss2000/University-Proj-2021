@@ -1,0 +1,170 @@
+ecoregion_name,biome,code,bird,mam,rep,amp,"birds,mams,reps,amps"
+Araucaria moist forests,TrM,NT0101,440,141,134,177,892
+Atlantic Coast restingas,TrM,NT0102,257,196,46,195,694
+Bahia coastal forests,TrM,NT0103,466,166,89,106,827
+Bahia interior forests,TrM,NT0104,540,182,34,160,916
+Bolivian Yungas,TrM,NT0105,539,245,38,55,877
+Caatinga Enclaves moist forests,TrM,NT0106,0,124,52,20,196
+Caqueta moist forests,TrM,NT0107,469,193,133,75,870
+Catatumbo moist forests,TrM,NT0108,403,205,61,3,672
+Cauca Valley montane forests,TrM,NT0109,493,201,96,60,850
+Central American Atlantic moist forests,TrM,NT0111,430,172,143,38,783
+Central American montane forests,TrM,NT0112,303,191,111,73,678
+Chiapas montane forests,TrM,NT0113,325,163,61,49,598
+Chimalapas montane forests,TrM,NT0114,294,145,31,19,489
+Choco-Darien moist forests,TrM,NT0115,600,215,200,138,1153
+Cordillera La Costa montane forests,TrM,NT0117,584,194,53,40,871
+Cordillera Oriental montane forests,TrM,NT0118,658,254,70,85,1067
+Costa Rican seasonal moist forests,TrM,NT0119,373,186,99,40,698
+Cuban moist forests,TrM,NT0120,251,33,97,37,418
+Eastern Cordillera real montane forests,TrM,NT0121,568,238,159,194,1159
+Eastern Panamanian montane forests,TrM,NT0122,327,198,102,30,657
+Guianan Highlands moist forests,TrM,NT0124,613,237,80,102,1032
+Guianan moist forests,TrM,NT0125,685,215,204,135,1239
+Gurupa varzea,TrM,NT0126,558,174,27,32,791
+Hispaniolan moist forests,TrM,NT0127,217,20,117,47,401
+Iquitos varzea,TrM,NT0128,624,255,164,131,1174
+Isthmian-Atlantic moist forests,TrM,NT0129,518,217,168,118,1021
+Isthmian-Pacific moist forests,TrM,NT0130,407,190,143,99,839
+Jamaican moist forests,TrM,NT0131,207,21,33,20,281
+Japura-Solimoes-Negro moist forests,TrM,NT0132,506,189,77,99,871
+Jurua-Purus moist forests,TrM,NT0133,554,189,38,68,849
+Leeward Islands moist forests,TrM,NT0134,134,12,43,11,200
+Madeira-Tapajos moist forests,TrM,NT0135,621,251,71,55,998
+Magdalena Valley montane forests,TrM,NT0136,500,230,80,107,917
+Magdalena-Uraba moist forests,TrM,NT0137,517,197,122,48,884
+Marajo varzea,TrM,NT0138,540,184,86,53,863
+Maranhao Babatu forests,TrM,NT0139,268,133,112,26,539
+Mato Grosso seasonal forests,TrM,NT0140,476,174,38,52,740
+Monte Alegre varzea,TrM,NT0141,681,221,38,61,1001
+Napo moist forests,TrM,NT0142,650,243,205,168,1266
+Negro-Branco moist forests,TrM,NT0143,486,213,127,70,896
+Northeastern Brazil restingas,TrM,NT0144,276,119,13,15,423
+Northwestern Andean montane forests,TrM,NT0145,567,248,144,219,1178
+Oaxacan montane forests,TrM,NT0146,323,185,92,51,651
+Orinoco Delta swamp forests,TrM,NT0147,405,192,22,10,629
+Pantanos de Centla,TrM,NT0148,360,130,45,18,553
+Guianan Freshwater swamp forests,TrM,NT0149,565,177,70,33,845
+Alto Parana Atlantic forests,TrM,NT0150,586,213,163,303,1265
+Pernambuco coastal forests,TrM,NT0151,407,122,84,36,649
+Pernambuco interior forests,TrM,NT0152,343,132,25,38,538
+Peruvian Yungas,TrM,NT0153,645,255,80,117,1097
+Peten-Veracruz moist forests,TrM,NT0154,468,191,226,103,988
+Puerto Rican moist forests,TrM,NT0155,181,15,36,17,249
+Purus varzea,TrM,NT0156,623,219,164,128,1134
+Purus-Madeira moist forests,TrM,NT0157,572,183,36,72,863
+Rio Negro campinarana,TrM,NT0158,358,216,25,65,664
+Santa Marta montane forests,TrM,NT0159,459,170,38,20,687
+Serra do Mar coastal forests,TrM,NT0160,628,175,123,247,1173
+Sierra de los Tuxtlas,TrM,NT0161,436,117,83,41,677
+Sierra Madre de Chiapas moist forest,TrM,NT0162,315,148,118,44,625
+Solimoes-Japura moist forest,TrM,NT0163,542,191,224,136,1093
+South Florida rocklands,TrM,NT0164,176,36,51,15,278
+Southern Andean Yungas,TrM,NT0165,463,161,72,49,745
+Southwest Amazon moist forests,TrM,NT0166,782,303,228,173,1486
+Talamancan montane forests,TrM,NT0167,450,204,132,124,910
+Tapajos-Xingu moist forests,TrM,NT0168,556,179,113,58,906
+Pantepuis,TrM,NT0169,628,215,24,62,929
+Tocantins/Pindare moist forests,TrM,NT0170,517,164,152,35,868
+Trinidad and Tobago moist forests,TrM,NT0171,308,36,11,2,357
+Uatuma-Trombetas moist forests,TrM,NT0173,482,207,159,96,944
+Ucayali moist forests,TrM,NT0174,603,237,139,123,1102
+Venezuelan Andes montane forests,TrM,NT0175,473,225,33,60,791
+Veracruz moist forests,TrM,NT0176,341,149,145,60,695
+Veracruz montane forests,TrM,NT0177,328,128,48,27,531
+Western Ecuador moist forests,TrM,NT0178,490,151,144,87,872
+Windward Islands moist forests,TrM,NT0179,158,19,45,6,228
+Xingu-Tocantins-Araguaia moist forests,TrM,NT0180,527,176,121,52,876
+Yucatan moist forests,TrM,NT0181,359,111,133,35,638
+Guianan piedmont and lowland moist forests,TrM,NT0182,0,227,0,0,227
+Apure-Villavicencio dry forests,TrD,NT0201,474,238,66,47,825
+Atlantic dry forests,TrD,NT0202,311,147,26,41,525
+Bajio dry forests,TrD,NT0204,278,139,71,33,521
+Balsas dry forests,TrD,NT0205,264,162,143,43,612
+Bolivian montane dry forests,TrD,NT0206,222,175,29,25,451
+Cauca Valley dry forests,TrD,NT0207,311,176,35,7,529
+Central American dry forests,TrD,NT0209,330,195,99,36,660
+Dry Chaco,TrD,NT0210,572,193,131,57,953
+Chiapas Depression dry forests,TrD,NT0211,188,160,106,33,487
+Chiquitano dry forests,TrD,NT0212,457,209,82,55,803
+Cuban dry forests,TrD,NT0213,246,34,93,32,405
+Ecuadorian dry forests,TrD,NT0214,338,129,31,13,511
+Hispaniolan dry forests,TrD,NT0215,214,20,117,30,381
+Jalisco dry forests,TrD,NT0217,326,137,123,26,612
+Jamaican dry forests,TrD,NT0218,200,21,31,14,266
+Lara-Falcon dry forests,TrD,NT0219,334,174,9,10,527
+Lesser Antillean dry forests,TrD,NT0220,344,43,56,6,449
+Magdalena Valley dry forests,TrD,NT0221,348,171,51,19,589
+Maracaibo dry forests,TrD,NT0222,397,191,12,9,609
+Maranon dry forests,TrD,NT0223,156,138,38,4,336
+Panamanian dry forests,TrD,NT0224,273,165,59,22,519
+Patia Valley dry forests,TrD,NT0225,124,155,13,0,292
+Puerto Rican dry forests,TrD,NT0226,181,15,51,6,253
+Sierra de la Laguna dry forests,TrD,NT0227,194,46,45,2,287
+Sinaloan dry forests,TrD,NT0228,325,149,131,39,644
+Sinu Valley dry forests,TrD,NT0229,396,179,132,43,750
+Southern Pacific dry forests,TrD,NT0230,299,159,218,68,744
+Tumbes-Piura dry forests,TrD,NT0232,295,100,60,11,466
+Veracruz dry forests,TrD,NT0233,295,124,70,26,515
+Yucatan dry forests,TrD,NT0235,295,87,97,19,498
+Bahamian pine mosaic,TrC,NT0301,218,8,44,2,272
+Belizean pine forests,TrC,NT0302,272,122,39,14,447
+Central American pine-oak forests,TrC,NT0303,349,203,194,107,853
+Cuban pine forests,TrC,NT0304,249,34,83,23,389
+Hispaniolan pine forests,TrC,NT0305,214,20,78,29,341
+Miskito pine forests,TrC,NT0306,240,128,0,0,368
+Sierra de la Laguna pine-oak forests,TrC,NT0307,171,45,12,3,231
+Sierra Madre de Oaxaca pine-oak forests,TrC,NT0308,447,176,95,48,766
+Sierra Madre del Sur pine-oak forests,TrC,NT0309,330,151,168,69,718
+Trans-Mexican Volcanic Belt pine-oak forests,TrC,NT0310,335,197,171,79,782
+Magellanic subpolar forests,TeM,NT0402,122,30,4,12,168
+Valdivian temperate forests,TeM,NT0404,177,56,19,38,290
+Beni savanna,TrG,NT0702,509,212,24,29,774
+Campos Rupestres montane savanna,TrG,NT0703,334,180,48,116,678
+Cerrado,TrG,NT0704,571,254,219,205,1249
+Guianan savanna,TrG,NT0707,444,225,68,94,831
+Humid Chaco,TrG,NT0708,431,143,109,60,743
+Llanos,TrG,NT0709,414,223,89,40,766
+Uruguayan savanna,TrG,NT0710,350,101,90,118,659
+Espinal,G,NT0801,311,81,81,29,502
+Low Monte,G,NT0802,200,52,45,10,307
+Humid Pampas,G,NT0803,266,73,63,36,438
+Patagonian steppe,G,NT0805,222,60,67,14,363
+Cuban wetlands,FG,NT0902,250,33,69,16,368
+Enriquillo wetlands,FG,NT0903,206,20,57,9,292
+Everglades,FG,NT0904,210,38,45,19,312
+Guayaquil flooded grasslands,FG,NT0905,165,112,10,8,295
+Orinoco wetlands,FG,NT0906,303,176,14,0,493
+Pantanal,FG,NT0907,423,172,101,54,750
+Parana flooded savanna,FG,NT0908,293,97,54,44,488
+Southern Cone Mesopotamian savanna,FG,NT0909,282,95,43,25,445
+Central Andean dry puna,MG,NT1001,231,49,26,14,320
+Central Andean puna,MG,NT1002,526,94,29,26,675
+Central Andean wet puna,MG,NT1003,242,94,19,28,383
+Cordillera Central paramo,MG,NT1004,152,40,1,14,207
+Cordillera de Merida paramo,MG,NT1005,77,51,0,3,131
+Northern Andean paramo,MG,NT1006,157,77,50,90,374
+Santa Marta paramo,MG,NT1007,56,26,0,4,86
+Southern Andean steppe,MG,NT1008,157,56,60,13,286
+High Monte,MG,NT1010,203,86,49,11,349
+Chilean matorral,MeF,NT1201,131,42,27,6,206
+Araya and Paria xeric scrub,D,NT1301,339,163,3,1,506
+Atacama desert,D,NT1303,97,22,1,0,120
+Caatinga,D,NT1304,320,158,102,51,631
+Caribbean shrublands,D,NT1305,203,18,91,14,326
+Cuban cactus scrub,D,NT1306,244,32,94,24,394
+Galapagos Islands scrubland mosaic,D,NT1307,92,5,27,1,125
+Guajira-Barranquilla xeric scrub,D,NT1308,387,194,51,8,640
+La Costa xeric shrublands,D,NT1309,395,191,10,13,609
+Motagua Valley thornscrub,D,NT1312,115,138,88,23,364
+Paraguana xeric scrub,D,NT1313,316,178,8,2,504
+San Lucan xeric scrub,D,NT1314,190,50,48,2,290
+Sechura desert,D,NT1315,168,85,60,7,320
+Tehuacan Valley matorral,D,NT1316,169,140,67,28,404
+Amazon-Orinoco-Southern Caribbean mangroves,Ma,NT1401,113,271,53,14,451
+Bahamoan-Antillean mangroves,Ma,NT1402,164,45,328,59,596
+Mesoamerican Gulf-Caribbean mangroves,Ma,NT1403,106,185,164,52,507
+Northern Mesoamerican Pacific mangroves,Ma,NT1404,85,147,0,0,232
+South American Pacific mangroves,Ma,NT1405,87,211,88,35,421
+Southern Atlantic mangroves,Ma,NT1406,75,187,24,61,347
+Southern Mesoamerican Pacific mangroves,Ma,NT1407,92,202,128,55,477
